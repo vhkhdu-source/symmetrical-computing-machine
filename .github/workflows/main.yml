@@ -14,7 +14,7 @@ jobs:
           $installerPath = "$env:TEMP\tailscale.msi"
           Invoke-WebRequest -Uri $tsUrl -OutFile $installerPath
           Start-Process msiexec.exe -ArgumentList "/i", "`"$installerPath`"", "/quiet", "/norestart" -Wait
-          & "$env:ProgramFiles\Tailscale\tailscale.exe" up --authkey=tskey-auth-kLUm98hqxq11CNTRL-aup71ybgznezkyeFyXjYnerT1jsXStVw --hostname=gh-runner-${{ github.run_id }}
+          & "$env:ProgramFiles\Tailscale\tailscale.exe" up --authkey=${{ secrets.TAILSCALE_AUTHKEY }} --hostname=gh-runner-${{ github.run_id }}
           $tsIP = & "$env:ProgramFiles\Tailscale\tailscale.exe" ip -4
           "TAILSCALE_IP=$tsIP" | Out-File -Append $env:GITHUB_ENV
 
